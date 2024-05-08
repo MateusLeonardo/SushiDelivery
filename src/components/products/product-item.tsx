@@ -3,6 +3,7 @@ import { Product } from "@/types/product";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { ToastAction } from "../ui/toast";
+import { useCartStore } from "@/stores/cart-store";
 
 type Props = {
   item: Product;
@@ -10,7 +11,10 @@ type Props = {
 
 export const ProductItem = ({ item }: Props) => {
   const { toast } = useToast();
+  const { upsertCartItem } = useCartStore((state) => state);
+
   const handleAddToCart = () => {
+    upsertCartItem(item, 1);
     toast({
       title: "Adicionado ao carrinho",
       description: item.name,
